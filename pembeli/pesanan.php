@@ -19,6 +19,7 @@ if (isset($_POST['submit'])) {
                 <th>Kategori</th>
                 <th>Jumlah</th>
                 <th>Pesan</th>
+                <P>11</P>
             </tr>
         </thead>
         <tbody>
