@@ -1,11 +1,21 @@
 <?php include "header.php";
 if (isset($_POST['submit'])) {
-    $idpesanan = getIdpesan($_POST);
-    if( $idpesanan != 0 ){
-        $detil = addDetil($_POST,$idpesanan);
+    if ($_POST['jumlah'] > 0) {
+        $idpesanan = getIdpesan($_POST);
+        if( $idpesanan != 0 ) {
+            $detil = putInarray($_POST,$idpesanan);
+            if (isset ($_SESSION['keranjang'])) {
+                array_push($_SESSION['keranjang'],$detil);
+            }else {
+                $_SESSION['keranjang'][0] = $detil;
+            }
+            echo "<script>
+                alert('Pesanan Ditambahkan  kedalam keranjang');
+            </script>";
+        }
     } else {
         echo "<script>
-            alert('Data Gagal Ditambahkan  kedalam keranjang');
+            alert('Jumlah tidak boleh kurang dari 1');
         </script>";
     }
 }
@@ -19,7 +29,6 @@ if (isset($_POST['submit'])) {
                 <th>Kategori</th>
                 <th>Jumlah</th>
                 <th>Pesan</th>
-                <P>11</P>
             </tr>
         </thead>
         <tbody>
@@ -34,6 +43,7 @@ if (isset($_POST['submit'])) {
                 <td><?php echo $tampil['harga'] ?></td>
                 <td><?php echo $tampil['kategori'] ?></td>
                 <form method="post">
+                    <input type="hidden" name="no" value="<?php echo $no ?>">
                     <td><input type="number" name="jumlah"></td>
                     <input type="hidden" name="id_menu" value="<?php echo $tampil['id_menu'] ?>">
                     <input type="hidden" name="username" value="<?php echo $_SESSION['username'] ?>">

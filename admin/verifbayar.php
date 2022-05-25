@@ -1,5 +1,5 @@
 <?php include "header.php";
-$query = "SELECT * FROM pesanan WHERE status='Belum Lunas'";
+$query = "SELECT * FROM pesanan WHERE status='Menunggu verif'";
 $data = mysqli_query($koneksi,$query); ?>
 <table>
     <thead>
@@ -28,7 +28,7 @@ while ($tampil = mysqli_fetch_array($data)) { ?>
                 <td><?php echo $tampil['tanggal'] ?></td>
                 <td><?php echo $tampil['total_bayar'] ?></td>
                 <td><?php echo $tampil['status'] ?></td>
-                <td><button><a href="verif.php?id_menu=<?php echo $tampil['id_pesanan'] ?>">TANDAI LUNAS</a></button></td>
+                <td><button><a href="verif.php?id_menu=<?php echo $tampil['id_pesanan'] ?>">VERIFY</a></button></td>
             </tr>
         </tbody>
     </table>

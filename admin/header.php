@@ -23,7 +23,7 @@ if (!isset($_SESSION['level'])) {
         <ul class="main-nav">
             <li><a href="kelolamenu.php">Kelola Menu</a></li>
             <li><a href="verifbayar.php">Pembayaran</a></li>
-            <li><a href="report.php">Laporan</a></li>
+            <li><a href="laporan.php">Laporan</a></li>
         </ul>
 	</header>
     <div class="content">

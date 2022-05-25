@@ -3,7 +3,7 @@ $id = $_GET['id_menu'];
 $menu = mysqli_query($koneksi, "SELECT * FROM menu where id_menu='$id'");
 $row = mysqli_fetch_array($menu);
 if (isset($_POST['submit'])) {
-    $hasil = upMenu($_POST);
+    $hasil = upMenu($_POST,$id);
     if( $hasil > 0){
         echo "<script>
                 alert('Data Berhasil Diubah');

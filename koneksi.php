@@ -24,16 +24,16 @@ function addMenu($data)
 	return mysqli_affected_rows($koneksi);
 }
 
-function upMenu($data){
+function upMenu($data,$id){
 	global $koneksi;
 
 	// Menampung data ke variabel
-	$id = $data["id"];
+	$idmenu = $id;
 	$nama = htmlspecialchars($data["nama_menu"]);
 	$harga = htmlspecialchars($data["harga"]);
     $kategori = htmlspecialchars($data["kategori"]);
 	// Membuat Query update data
-	$query = "UPDATE menu SET nama_menu='$nama', harga='$harga', kategori='$kategori' WHERE id_menu = '$id'";
+	$query = "UPDATE menu SET nama_menu='$nama', harga='$harga', kategori='$kategori' WHERE id_menu = '$idmenu'";
 
 	// Mengeksekusi Query
 	mysqli_query($koneksi, $query);
@@ -72,7 +72,7 @@ function login($data){
 function verif($id){
 	global $koneksi;
 	// Membuat Query UPsate
-	$query = "UPDATE pesanan SET status='Lunas' WHERE id_pesanan = $id";
+	$query = "UPDATE pesanan SET status='Selesai' WHERE id_pesanan = $id";
 	// Mengeksekusi Query dengan mysql_querry dengan dua parameter
 	mysqli_query($koneksi, $query);
 
@@ -110,29 +110,40 @@ function getIdpesan($data) {
 	$query = mysqli_query($koneksi, "SELECT * FROM pesanan WHERE nama_pelanggan='$username' AND tanggal='$today'");
 	if ($query->num_rows > 0 ) {
 		$pesanan = mysqli_fetch_assoc($query);
-		mysqli_query($koneksi,"UPDATE pesanan SET status='Belum Lunas' WHERE id_pesanan = $pesanan[id_pesanan]");
+		mysqli_query($koneksi,"UPDATE pesanan SET status='Menunggu verif' WHERE id_pesanan = $pesanan[id_pesanan]");
 		return $pesanan['id_pesanan'];
 	}else {
-		mysqli_query($koneksi, "INSERT INTO pesanan VALUES ('', '$username', '$today','','Belum lunas')");
+		mysqli_query($koneksi, "INSERT INTO pesanan VALUES ('', '$username', '$today','','Menunggu verif')");
 		return mysqli_insert_id($koneksi);
 	}
 }
 
-function addDetil($data,$id)
+function addDetil($data)
 {
     global $koneksi;
 
-	$idpesanan = htmlspecialchars($id);
-	$idmenu = htmlspecialchars($data["id_menu"]);
-    $jumlah = htmlspecialchars($data["jumlah"]);
+	foreach ($data as $a) {
+		$idpesanan = htmlspecialchars($a[1]);
+		$idmenu = htmlspecialchars($a[2]);
+		$jumlah = htmlspecialchars($a[3]);
 
-	$query = "
+		$query = "
 		INSERT INTO pesanan_detil VALUES
-		('', '$idpesanan', '$idmenu', '$jumlah','')
-	";
-	$result = mysqli_query($koneksi, $query);
+		('', '$idpesanan', '$idmenu', '$jumlah','')";
+		mysqli_query($koneksi, $query);
+	}
+	unset($_SESSION['keranjang']);
 
 	return mysqli_affected_rows($koneksi);
 }
 
- ?>
+function putInarray ($data,$id) {
+	$idpesanan = htmlspecialchars($id);
+	$idmenu = htmlspecialchars($data["id_menu"]);
+	$jumlah = htmlspecialchars($data["jumlah"]);
+
+	$array = array("","$idpesanan","$idmenu","$jumlah","");
+	return $array;
+}
+
+?>
