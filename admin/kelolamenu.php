@@ -18,7 +18,7 @@
         <tbody>
         <?php
             $no=1;
-            $data = mysqli_query($koneksi, "SELECT * FROM menu");
+            $data = mysqli_query($koneksi, "SELECT * FROM menu ORDER BY kategori");
             while ($tampil = mysqli_fetch_array($data)) {
          ?>
             <tr>

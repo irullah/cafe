@@ -19,7 +19,7 @@ if (!isset($_SESSION['level'])) {
 </head>
 <body>
     <header class="header">
-        <h1 class="logo"><a href="">Nokira Cafe</a> </h1>
+        <h1 class="logo"><a href="index.php">Nokira Cafe</a> </h1>
         <ul class="main-nav">
             <li><a href="kelolamenu.php">Kelola Menu</a></li>
             <li><a href="verifbayar.php">Pembayaran</a></li>

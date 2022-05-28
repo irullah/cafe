@@ -55,4 +55,10 @@ if (isset ($_SESSION['keranjang']) && $_SESSION['keranjang'] != NULL) { ?>
         </table>
 
 
-<?php } } include "footer.php";?>
+<?php } }else { ?>
+    <table>
+        <tr>
+            <td> Belum ada pesanan</td>
+        </tr>
+    </table>
+<?php } include "footer.php";?>
